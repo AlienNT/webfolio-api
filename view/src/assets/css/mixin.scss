@@ -1,0 +1,37 @@
+@import "variables/media";
+
+@mixin bgLighten($color, $percent: 10%) {
+  background: $color;
+  @media #{$mouseDevice} {
+    &:hover {
+      background: lighten($color, $percent);
+    }
+  }
+}
+
+@mixin bgDarken($color, $percent: 10%) {
+  background: $color;
+  @media #{$mouseDevice} {
+    &:hover {
+      background: darken($color, $percent);
+    }
+  }
+}
+
+@mixin fontLighten($color, $percent: 10%) {
+  color: $color;
+  @media #{$mouseDevice} {
+    &:hover {
+      color: lighten($color, $percent);
+    }
+  }
+}
+
+@mixin fontDarken($color, $percent: 10%) {
+  color: $color;
+  @media #{$mouseDevice} {
+    &:hover {
+      color: darken($color, $percent);
+    }
+  }
+}

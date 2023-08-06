@@ -1,0 +1,13 @@
+@import "variables/media";
+@import "variables/colors";
+@import "normalize";
+@import "flex-grid";
+
+html, body {
+  background: $primaryColor;
+}
+
+html, body, #app {
+  height: 100%;
+
+}

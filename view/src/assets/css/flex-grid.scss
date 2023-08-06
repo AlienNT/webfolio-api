@@ -1,0 +1,21 @@
+@import "variables/media";
+
+.container {
+  max-width: $xl;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 100%;
+  margin: auto;
+}
+
+.row {
+  margin-left: -15px;
+  margin-right: -15px;
+  display: flex;
+  width: auto;
+}
+
+.col {
+  padding-left: 15px;
+  padding-right: 15px;
+}

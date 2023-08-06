@@ -1,0 +1,1 @@
+import{P as e}from"./PageTemplate-339dc5ca.js";import{o as t,c as a,w as s,a as o}from"./index-78fdf4d8.js";const i={__name:"SkillsPage",setup(r){return(c,l)=>(t(),a(e,{"style-prefix":"skills"},{content:s(()=>[o(" skills ")]),_:1}))}};export{i as default};

@@ -1,0 +1,16 @@
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  outline: none;
+  box-sizing: border-box;
+  border: none;
+}
+
+input, img, textarea, button, label {
+  display: block;
+  width: 100%;
+}
+ul {
+  list-style: none;
+}

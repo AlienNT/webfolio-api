@@ -1,0 +1,15 @@
+$xs: 0;
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+$xxl: 1400px;
+
+$mediaExtraSmall: 'all and (min-width: #{$xs})';
+$mediaSmall: 'all and (min-width: #{$sm})';
+$mediaMedium: 'all and (min-width: #{$md})';
+$mediaLarge: 'all and (min-width: #{$lg})';
+$mediaExtraLarge: 'all and (min-width: #{$xl})';
+$mediaExtraExtraLarge: 'all and (min-width: #{$xxl})';
+
+$mouseDevice: '(hover: hover) and (pointer: fine)';
