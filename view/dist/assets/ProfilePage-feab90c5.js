@@ -1,1 +1,0 @@
-import{P as e}from"./PageTemplate-339dc5ca.js";import{o as t,c as a,w as o,a as r}from"./index-78fdf4d8.js";const i={__name:"ProfilePage",setup(c){return(p,s)=>(t(),a(e,{"style-prefix":"profile"},{content:o(()=>[r(" profile ")]),_:1}))}};export{i as default};

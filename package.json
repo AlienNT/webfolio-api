@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "api-dev": "nodemon -r dotenv/config index.js --host"
+    "api-dev": "nodemon -r dotenv/config index.js"
   },
   "author": "Nick Trysten",
   "license": "ISC",

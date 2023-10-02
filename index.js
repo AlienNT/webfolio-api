@@ -16,8 +16,8 @@ const filePath = __dirname + './view/dist'
 APP
     .use(bodyParser.json({limit: '10mb'}))
     .use(cors())
-    .use(Express.static(filePath))
     .use(config.API_ROUTE, router)
+    .use(Express.static(filePath))
 
 
 const start = async () => {
@@ -29,6 +29,9 @@ const start = async () => {
         )
         APP.listen(config.PORT, () => {
             console.log('server started in port: ', config.PORT)
+        })
+        APP.get('/', (req, res) => {
+            res.sendFile(filePath + '/index.html')
         })
 
     } catch (e) {
