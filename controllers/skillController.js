@@ -4,7 +4,11 @@ import {Skill} from "../models/index.js";
 class SkillController {
     async get(req, res) {
         try {
-            const skills = await Skill.find({})
+            const {user} = req
+
+            const skills = user ?
+                await Skill.find({}) :
+                await Skill.find({active: true})
 
             if (!skills) {
                 return errorResponse(res, {
