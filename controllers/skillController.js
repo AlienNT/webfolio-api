@@ -19,7 +19,7 @@ class SkillController {
 
             return successResponse(res, {data: skills})
         } catch (e) {
-
+            console.log('skill get error', e)
             return errorResponse(res, {
                 errors: 'get skills error'
             })
@@ -28,9 +28,20 @@ class SkillController {
 
     async create(req, res) {
         try {
+            const {title, image} = req.body
+
+            const newSkill = await Skill.create({title, image})
+
+            if (!newSkill) {
+                return errorResponse(res, {
+                    errors: 'create skill error'
+                })
+            }
+
+            return successResponse(res, {data: newSkill})
 
         } catch (e) {
-
+            console.log('skill create error', e)
             return errorResponse(res, {
                 errors: 'error'
             })
@@ -39,9 +50,19 @@ class SkillController {
 
     async update(req, res) {
         try {
+            const {_id, title, active, image} = req.body
+
+            const foundedSkill = await Skill.findByIdAndUpdate(_id, {title, active, image})
+
+            if (!foundedSkill) {
+                return errorResponse(res, {
+                    errors: 'skill not found'
+                })
+            }
+            return successResponse(res, {data: foundedSkill})
 
         } catch (e) {
-
+            console.log('skill update error', e)
             return errorResponse(res, {
                 errors: 'error'
             })
@@ -50,9 +71,20 @@ class SkillController {
 
     async delete(req, res) {
         try {
+            const {_id} = req?.body
+
+            const deletedSkill = await Skill.findOneAndDelete(_id)
+
+            if (!deletedSkill) {
+                return errorResponse(res, {
+                    errors: 'skill not deleted'
+                })
+            }
+
+            return successResponse(res, {data: deletedSkill})
 
         } catch (e) {
-            console.log(e)
+            console.log('skill delete error', e)
             return errorResponse(res, {
                 errors: 'error'
             })
