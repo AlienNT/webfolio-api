@@ -1,5 +1,7 @@
 import {errorResponse, successResponse} from "../helpers/responseHelper.js";
+import {getContactFields} from "../helpers/contactHelper.js";
 import {Contact} from "../models/index.js";
+import statusCode from "../helpers/statusCodeHelper.js";
 
 class ContactController {
     async get(req, res) {
@@ -8,6 +10,7 @@ class ContactController {
 
             if (!contacts?.length) {
                 return errorResponse(res, {
+                    status: statusCode.NOT_FOUND,
                     errors: 'contacts not found'
                 })
             }
@@ -24,9 +27,9 @@ class ContactController {
 
     async create(req, res) {
         try {
-            const {title, type, value} = req?.body
+            const fields = getContactFields(req)
 
-            const newContact = await Contact.create({title, type, value})
+            const newContact = await Contact.create(fields)
 
             if (!newContact) {
                 return errorResponse(res, {
@@ -46,9 +49,10 @@ class ContactController {
 
     async update(req, res) {
         try {
-            const {title, type, value, _id} = req?.body
+            const {_id} = req?.body
+            const fields = getContactFields(req)
 
-            const updatedContact = await Contact.findByIdAndUpdate(_id, {title, type, value})
+            const updatedContact = await Contact.findByIdAndUpdate(_id, fields)
 
             if (!updatedContact) {
                 errorResponse(res, {
