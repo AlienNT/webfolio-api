@@ -1,5 +1,7 @@
 import {errorResponse, successResponse} from "../helpers/responseHelper.js";
 import {Skill} from "../models/index.js";
+import {getSkillFields} from "../helpers/skillHelper.js";
+import statusCode from "../helpers/statusCodeHelper.js";
 
 class SkillController {
     async get(req, res) {
@@ -12,7 +14,7 @@ class SkillController {
 
             if (!skills) {
                 return errorResponse(res, {
-                    status: 404,
+                    status: statusCode.NOT_FOUND,
                     errors: 'skills not found'
                 })
             }
@@ -28,9 +30,9 @@ class SkillController {
 
     async create(req, res) {
         try {
-            const {title, image} = req.body
+            const fields = getSkillFields(req)
 
-            const newSkill = await Skill.create({title, image})
+            const newSkill = await Skill.create(fields)
 
             if (!newSkill) {
                 return errorResponse(res, {
@@ -50,9 +52,9 @@ class SkillController {
 
     async update(req, res) {
         try {
-            const {_id, title, active, image} = req.body
+            const fields = getSkillFields(req)
 
-            const foundedSkill = await Skill.findByIdAndUpdate(_id, {title, active, image})
+            const foundedSkill = await Skill.findByIdAndUpdate(_id, fields)
 
             if (!foundedSkill) {
                 return errorResponse(res, {
