@@ -1,5 +1,7 @@
 import {errorResponse, successResponse} from "../helpers/responseHelper.js";
 import {Work} from "../models/index.js";
+import {getWorkFields} from "../helpers/workHelper.js";
+import statusCode from "../helpers/statusCodeHelper.js";
 
 class WorkController {
     async get(req, res) {
@@ -8,6 +10,7 @@ class WorkController {
 
             if (!works) {
                 return errorResponse(res, {
+                    status: statusCode.NOT_FOUND,
                     errors: 'works not found'
                 })
             }
@@ -24,9 +27,9 @@ class WorkController {
 
     async create(req, res) {
         try {
-            const {en, ru, ua, image, path, codePath} = req?.body
+            const fields = getWorkFields(req)
 
-            const newWork = await Work.create({en, ru, ua, image, path, codePath})
+            const newWork = await Work.create(fields)
 
             if (!newWork) {
                 return errorResponse(res, {
@@ -46,9 +49,9 @@ class WorkController {
 
     async update(req, res) {
         try {
-            const {en, ru, ua, image, path, codePath, _id} = req?.body
+            const fields = getWorkFields(req)
 
-            const updatedWork = await Work.findByIdAndUpdate(_id, {en, ru, ua, image, path, codePath})
+            const updatedWork = await Work.findByIdAndUpdate(_id, fields)
 
             if (!updatedWork) {
                 return errorResponse(res, {
