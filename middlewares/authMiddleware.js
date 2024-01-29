@@ -5,7 +5,7 @@ import {User} from "../models/index.js";
 
 export default async function (req, res, next) {
     if (req.method === "OPTIONS") {
-        next()
+        return next()
     }
 
     try {
@@ -30,7 +30,7 @@ export default async function (req, res, next) {
 
         next()
     } catch (e) {
-        console.log(e)
+        console.log('unauthorized', e)
         return errorResponse(res, {
             status: statusCode.UNAUTHORIZED,
             errors: ["user unauthorized"]
