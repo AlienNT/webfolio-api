@@ -1,6 +1,7 @@
-import {getToken, verifyUser} from "../helpers/authHelper.js";
-import {errorResponse} from "../helpers/responseHelper.js";
+import {getCookie, getToken, verifyUser} from "../helpers/authHelper.js";
+import {errorResponse, setCookie, successResponse} from "../helpers/responseHelper.js";
 import statusCode from "../helpers/statusCodeHelper.js";
+import TokenController from "../controllers/tokenController.js";
 import {User} from "../models/index.js";
 
 export default async function (req, res, next) {
@@ -9,16 +10,52 @@ export default async function (req, res, next) {
     }
 
     try {
-        const token = getToken(req)
+        const accessToken = getToken(req)
+        const refreshToken = getCookie(req, 'refreshToken')
 
-        if (!token) {
+        const savedToken = await TokenController.get(refreshToken)
+
+        if (!accessToken && refreshToken) {
+            const newTokens = await TokenController.create(req)
+
+
+            if (!newTokens) {
+                return errorResponse(res, {
+                    status: statusCode.UNAUTHORIZED,
+                    errors: ["user unauthorized"]
+                })
+            }
+
+            setCookie(res, {
+                name: 'refreshToken',
+                value: refreshToken
+            })
+
+            return successResponse(res, {
+                data: {
+                    accessToken: newTokens?.accessToken
+                }
+            })
+
+        }
+
+        if (!accessToken || !refreshToken) {
             return errorResponse(res, {
                 status: statusCode.UNAUTHORIZED,
                 errors: ["user unauthorized"]
             })
         }
-        const {_id} = verifyUser(token)
-        const user = await User.findById(_id)
+        const verifiedUser = verifyUser(accessToken)
+        const id = verifiedUser?._id
+
+        if (!id) {
+            return errorResponse(res, {
+                status: statusCode.UNAUTHORIZED,
+                errors: ["token expired"]
+            })
+        }
+        
+        const user = await User.findById(id)
 
         if (!user) {
             return errorResponse(res, {
@@ -30,10 +67,10 @@ export default async function (req, res, next) {
 
         next()
     } catch (e) {
-        console.log(e)
+        console.log('authMiddleware error', e)
         return errorResponse(res, {
             status: statusCode.UNAUTHORIZED,
-            errors: ["user unauthorized"]
+            errors: ["authMiddleware error"]
         })
     }
 }
