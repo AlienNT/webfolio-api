@@ -1,4 +1,4 @@
-import {createRouter, createWebHashHistory} from "vue-router";
+import {createRouter, createWebHistory} from "vue-router";
 import routes from "./routes.js";
 import {useAuth} from "../compositions/useAuth.js";
 import routerHelper from "./routerHelper.js";
@@ -6,7 +6,7 @@ import routerHelper from "./routerHelper.js";
 const {isAuth} = useAuth()
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes
 })
 router.beforeEach((to, from, next) => {
