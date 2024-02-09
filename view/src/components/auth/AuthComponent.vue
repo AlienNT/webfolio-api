@@ -1,14 +1,28 @@
 <script setup>
-import {useAuth} from "../../compositions/useAuth.js";
-import {useRoute} from "vue-router";
 import {computed} from "vue";
 
+import {useAuth} from "../../compositions/useAuth.js";
+import {useRoute, useRouter} from "vue-router";
+import {useAccessToken} from "../../compositions/useAccessToken.js";
+
+import routerHelper from "../../router/routerHelper.js";
+
 const route = useRoute()
+const router = useRouter()
+
 const {isAuth} = useAuth()
+const {deleteTokenInLocalStorage, removeAccessToken} = useAccessToken()
 
 const isActive = computed(() => {
-  return route.path === '/auth'
+  return route.path === routerHelper.AUTH.path
 })
+
+function logout() {
+  deleteTokenInLocalStorage()
+  removeAccessToken()
+
+  router.push({name: routerHelper.AUTH.name})
+}
 
 </script>
 
@@ -30,6 +44,7 @@ const isActive = computed(() => {
       <div
           v-else
           class="logout"
+          @click.stop="logout"
       >
         Logout
       </div>
