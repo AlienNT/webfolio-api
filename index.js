@@ -1,11 +1,12 @@
 import Express from 'express'
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
-import cors from 'cors'
 import dotenv from 'dotenv'
 import url from "url";
+import cors from 'cors'
 import config from "./config/index.js";
 import router from "./routes/index.js";
+import cookieParser from "cookie-parser";
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 dotenv.config()
@@ -14,8 +15,9 @@ const APP = new Express()
 const filePath = __dirname + './view/dist'
 
 APP
-    .use(bodyParser.json({limit: '10mb'}))
     .use(cors())
+    .use(cookieParser())
+    .use(bodyParser.json({limit: '10mb'}))
     .use(config.API_ROUTE, router)
     .use(Express.static(filePath))
 
