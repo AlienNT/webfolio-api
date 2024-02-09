@@ -3,8 +3,10 @@ import config from "../config/index.js";
 
 const cookieConfig = {
     secure: config.IS_COOKIE_SECURE,
-    httpOnly: true,
+    httpOnly: config.IS_COOKIE_SECURE,
     expires: config.REFRESH_TOKEN_EXPIRES.date,
+    sameSite: "none"
+
 }
 
 
