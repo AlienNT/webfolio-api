@@ -3,41 +3,23 @@
 import VForm from "../baseComponents/VForm.vue";
 import VInput from "../baseComponents/VInput.vue";
 import VButton from "../baseComponents/VButton.vue";
-import {computed, reactive} from "vue";
 import VTitle from "../baseComponents/VTitle.vue";
 
-function onSubmit() {
-  alert('onKeyDown: ' + JSON.stringify(formFields))
-}
+import {reactive} from "vue";
+
+const emit = defineEmits(['onSubmit'])
 
 const formFields = reactive({
   email: '',
   password: ''
 })
 
-const email = computed({
-  get() {
-    return formFields.email
-  },
-  set(e) {
-    formFields.email = e
-  }
-})
-
-const password = computed({
-  get() {
-    return formFields.password
-  },
-  set(e) {
-    formFields.password = e
-  }
-})
 </script>
 
 <template>
   <VForm
       class="auth-form"
-      @on-submit="onSubmit"
+      @on-submit="emit('onSubmit')"
   >
     <template v-slot:title>
       <VTitle
@@ -46,23 +28,23 @@ const password = computed({
     </template>
     <template v-slot:fields>
       <VInput
-          :value="email"
+          :value="formFields.email"
           placeholder="email"
           type="email"
-          @on-input="e => email = e"
+          @on-input="e => formFields.email = e"
       />
       <VInput
-          :value="password"
+          :value="formFields.password"
           type="password"
           placeholder="password"
-          @on-input="e => password = e"
+          @on-input="e => formFields.password = e"
       />
     </template>
     <template v-slot:buttons>
       <VButton
           type="button"
           title="Submit"
-          @on-click="onSubmit"
+          @on-click="emit('onSubmit', formFields)"
       />
     </template>
   </VForm>
