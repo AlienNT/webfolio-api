@@ -1,7 +1,7 @@
 export default {
-    HOME: {
-        path: '/',
-        name: 'home'
+    DEFAULT: {
+        path: '/works',
+        name: 'works'
     },
     PROFILE: {
         path: '/profile',
