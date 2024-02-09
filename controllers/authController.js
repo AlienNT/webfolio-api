@@ -1,0 +1,114 @@
+import {errorResponse, setCookie, successResponse} from "../helpers/responseHelper.js";
+import {comparePassword, getHash} from "../helpers/authHelper.js";
+import {User} from "../models/index.js";
+import statusCode from "../helpers/statusCodeHelper.js";
+import TokenController from "./tokenController.js";
+
+function userPublicFields(fields) {
+    const {email, _id, updatedAt, createdAt} = fields
+    return {email, _id, updatedAt, createdAt}
+}
+
+class AuthController {
+    async get(req, res) {
+        try {
+            return console.log(req?.body)
+        } catch (e) {
+            return errorResponse(res, {})
+        }
+    }
+
+    async login(req, res) {
+        try {
+            const {password, email} = req?.body
+
+            const user = await User.findOne({email})
+
+            if (!user) {
+                return errorResponse(res, {
+                    status: statusCode.NOT_FOUND,
+                    errors: ['user not found']
+                })
+            }
+
+            const isCorrectPassword = comparePassword(password, user?.password)
+
+            if (!isCorrectPassword) {
+                return errorResponse(res, {
+                    errors: ['incorrect password']
+                })
+            }
+
+            const tokens = await TokenController.create(req, res)
+
+            if (!tokens) {
+                return errorResponse(res, {
+                    errors: ['get token error']
+                })
+            }
+
+            setCookie(res, {
+                name: 'refreshToken',
+                value: tokens?.refreshToken
+            })
+
+            return successResponse(res, {
+                data: {
+                    ...userPublicFields(user),
+                    accessToken: tokens?.accessToken
+                }
+            })
+        } catch (e) {
+            console.log('AuthController LOGIN error', e)
+            return errorResponse(res, {errors: ['login error']})
+        }
+    }
+
+    async registration(req, res) {
+        try {
+            console.log(req?.body)
+
+            const existedUser = await User.findOne({email: req?.body?.email})
+
+            if (existedUser) {
+                return errorResponse(res, {
+                    status: statusCode.BAD_REQUEST,
+                    errors: ['user already exist']
+                })
+            }
+
+            const newUser = await User.create({
+                email: req?.body?.email,
+                password: getHash(req?.body?.password)
+            })
+
+            if (!newUser) {
+                return errorResponse(res, {
+                    errors: ['user create error']
+                })
+            }
+
+            return successResponse(res, {
+                data: newUser
+            })
+        } catch (e) {
+            console.log('AuthController REGISTRATION error', e)
+            return errorResponse(res, {
+                errors: ['registration error']
+            })
+        }
+    }
+
+    async delete(req, res) {
+        try {
+            return console.log(req?.body)
+        } catch (e) {
+            console.log('AuthController DELETE error', e)
+            return errorResponse(res, {
+                errors: ['delete user error']
+            })
+        }
+    }
+}
+
+export default new AuthController()
