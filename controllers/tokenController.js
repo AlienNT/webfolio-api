@@ -1,5 +1,6 @@
 import {Token} from "../models/index.js";
 import {generateAccessToken, generateRefreshToken} from "../helpers/authHelper.js";
+import TokenService from "../services/tokenService.js";
 
 class TokenController {
     async get(token) {
@@ -31,8 +32,7 @@ class TokenController {
                 }
             }
 
-            const refreshToken = generateRefreshToken()
-            const accessToken = generateAccessToken(userId)
+            const {refreshToken, accessToken} = TokenService.generateTokens(userId)
 
             const {value} = await Token.create({
                 value: refreshToken,
