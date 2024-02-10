@@ -6,11 +6,10 @@ import statusCode from "../helpers/statusCodeHelper.js";
 class SkillController {
     async get(req, res) {
         try {
-            const {user} = req
-            const skills = await Skill.find(user ? {} : {isActive: true}).lean()
-            console.log('skills', skills)
+            const {isAdmin} = req
+            const skills = await Skill.find(isAdmin ? {} : {active: true}).lean()
 
-            if (!skills?.length) {
+            if (!skills) {
                 return errorResponse(res, {
                     status: 404,
                     errors: 'skills not found'
