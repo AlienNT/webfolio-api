@@ -1,5 +1,5 @@
 import {computed, reactive, readonly} from "vue";
-import {indexByField, isExist} from "../../helpers/index.js";
+import {indexByField, isExist} from "@/helpers/index.js";
 
 const state = reactive({
     skills: []
