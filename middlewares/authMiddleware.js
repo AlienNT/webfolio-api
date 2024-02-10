@@ -10,13 +10,10 @@ export default async function (req, res, next) {
     }
 
     try {
-        const accessToken = getToken(req)
-        const refreshToken = getCookie(req, 'refreshToken')
-
-        const savedToken = await TokenController.get(refreshToken)
+        const {accessToken, refreshToken, savedToken} = req
 
         if (!accessToken && refreshToken) {
-            const newTokens = await TokenController.create(req)
+            const newTokens = await TokenController.create(req, res, refreshToken)
 
 
             if (!newTokens) {
@@ -54,7 +51,7 @@ export default async function (req, res, next) {
                 errors: ["token expired"]
             })
         }
-        
+
         const user = await User.findById(id)
 
         if (!user) {
