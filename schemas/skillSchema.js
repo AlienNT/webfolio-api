@@ -1,17 +1,18 @@
 import {Schema} from "mongoose";
+import {fieldName} from "../helpers/fieldName.js";
 
 export const skillSchema = new Schema({
-    title: {
+    [fieldName.SKILL.TITLE]: {
         type: Schema.Types.String,
         required: [true, 'title is required'],
         minLength: 1,
         maxLength: 20
     },
-    active: {
+    [fieldName.SKILL.ACTIVE]: {
         type: Schema.Types.Boolean,
         default: true
     },
-    image: {
+    [fieldName.SKILL.IMAGE]: {
         type: Schema.Types.String
     }
 }, {

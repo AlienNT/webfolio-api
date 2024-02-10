@@ -1,4 +1,6 @@
 import {Schema} from "mongoose";
+import {fieldName} from "../helpers/fieldName.js";
+
 const workTitle = {
     type: Schema.Types.String,
     required: [true, 'work title is required'],
@@ -11,25 +13,29 @@ const workDescription = {
     minLength: 2,
     maxLength: 200
 }
+
 const workTranslateSchema = new Schema({
     title: workTitle,
-    description: workDescription
+    description: workDescription,
 })
 
 export const workSchema = new Schema({
     en: workTranslateSchema,
     ru: workTranslateSchema,
     ua: workTranslateSchema,
-    image: {
+    [fieldName.WORK.IMAGE]: {
         type: Schema.Types.String
     },
-    path: {
+    [fieldName.WORK.PATH]: {
         type: Schema.Types.String,
         required: [true, 'path is required']
     },
-    codePath: {
+    [fieldName.WORK.CODE_PATH]: {
         type: Schema.Types.String,
         required: [true, 'code path is required']
+    },
+    [fieldName.WORK.CHIPS]: {
+        type: Schema.Types.String
     }
 }, {
     timestamps: {

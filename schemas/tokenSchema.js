@@ -11,6 +11,10 @@ const tokenSchema = new Schema({
     userAgent: {
         type: Schema.Types.String,
     },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }
 }, {
     timestamps: true,
 })

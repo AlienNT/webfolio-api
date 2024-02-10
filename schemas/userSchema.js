@@ -9,7 +9,13 @@ export const userSchema = new Schema({
     password: {
         type: String,
         required: [true, 'password is required']
-    }
+    },
+    tokens: [
+        {
+            type: Schema.Types.String,
+            ref: 'Token'
+        }
+    ]
 }, {
     timestamps: true
 })
