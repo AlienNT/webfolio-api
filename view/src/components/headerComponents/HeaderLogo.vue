@@ -1,11 +1,12 @@
 <script setup>
 
 import VImage from "../baseComponents/VImage.vue";
+import routerHelper from "../../router/routerHelper.js";
 
 defineProps({
   path: {
     type: String,
-    default: '/'
+    default: routerHelper.DEFAULT.path
   }
 })
 </script>
