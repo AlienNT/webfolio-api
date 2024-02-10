@@ -1,12 +1,12 @@
 import statusCode from "./statusCodeHelper.js";
 import config from "../config/index.js";
 
-const cookieConfig = {
+export const cookieConfig = {
     secure: config.IS_COOKIE_SECURE,
     httpOnly: config.IS_COOKIE_SECURE,
+    maxAge: config.REFRESH_TOKEN_EXPIRES.date,
     expires: config.REFRESH_TOKEN_EXPIRES.date,
-    sameSite: "none"
-
+    sameSite: 'none'
 }
 
 
