@@ -13,6 +13,16 @@ const config = {
     ACCESS_TOKEN_EXPIRES: getTime({hours: 1}),
     IS_COOKIE_SECURE: process.env.NODE_ENV !== "development",
     IS_DEVELOPMENT: process.env.NODE_ENV !== "development",
-    CLIENT_HOST: process.env.NODE_ENV !== "development" ? 'http://192.168.0.100:5173' : '/'
+    CLIENT_HOST: process.env.NODE_ENV !== "development" ? 'http://192.168.0.100:5173' : '/',
+    ORIGINS: [
+        "http://172.24.48.1:5173",
+        "http://localhost:5173"
+    ],
+    ACCESS_TOKEN: {
+        options: {expiresIn: process.env.PROD ? '2m' : '1m'},
+        payload:({_id}) => {
+            return {_id}
+        }
+    }
 }
 export default config
