@@ -52,6 +52,9 @@ class AuthController {
                 value: tokens?.refreshToken
             })
 
+            user.tokens.push(tokens.refreshToken)
+            user.save()
+
             return successResponse(res, {
                 data: {
                     ...userPublicFields(user),
