@@ -52,7 +52,7 @@ class WorkController {
             const {id} = req?.params
             const fields = FieldsService.getSkillFields(req)
 
-            const updatedWork = await Work.findByIdAndUpdate(id, fields)
+            const updatedWork = await Work.findByIdAndUpdate(id, fields, {new: true})
 
             if (!updatedWork) {
                 return errorResponse(res, {
