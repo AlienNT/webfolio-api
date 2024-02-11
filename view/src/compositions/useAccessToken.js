@@ -5,7 +5,9 @@ const state = reactive({
 })
 
 export function useAccessToken() {
-    const accessToken = computed(() => state.accessToken)
+    const accessToken = computed(() => {
+        return state.accessToken
+    })
 
     function setAccessToken(token) {
         return state.accessToken = token
