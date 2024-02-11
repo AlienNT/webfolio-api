@@ -12,7 +12,7 @@ export default async function (req, res, next) {
 
        const savedToken = await TokenController.get(refreshToken)
 
-       req.acessToken = accessToken
+       req.accessToken = accessToken
        req.refreshToken = refreshToken
        req.savedToken = savedToken
        req.isAdmin = !!savedToken
