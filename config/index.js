@@ -16,7 +16,8 @@ const config = {
     CLIENT_HOST: process.env.NODE_ENV !== "development" ? 'http://192.168.0.100:5173' : '/',
     ORIGINS: [
         "http://172.24.48.1:5173",
-        "http://localhost:5173"
+        "http://localhost:5173",
+        "https://webfolio-develop.onrender.com"
     ],
     ACCESS_TOKEN: {
         options: {expiresIn: process.env.PROD ? '2m' : '1m'},
