@@ -10,49 +10,29 @@ export default async function (req, res, next) {
     }
 
     try {
-        const {accessToken, refreshToken, savedToken} = req
+        const {accessToken, refreshToken} = req
 
-        if (!accessToken && refreshToken) {
-            const newTokens = await TokenController.create(req, res, refreshToken)
-
-
-            if (!newTokens) {
-                return errorResponse(res, {
-                    status: statusCode.UNAUTHORIZED,
-                    errors: ["user unauthorized"]
-                })
-            }
-
-            setCookie(res, {
-                name: 'refreshToken',
-                value: refreshToken
-            })
-
-            return successResponse(res, {
-                data: {
-                    accessToken: newTokens?.accessToken
-                }
-            })
-
-        }
-
-        if (!accessToken || !refreshToken) {
+        if (!accessToken) {
             return errorResponse(res, {
                 status: statusCode.UNAUTHORIZED,
                 errors: ["user unauthorized"]
             })
         }
+        console.log('AUTH MIDDLEWARE', {
+            accessToken, refreshToken
+        })
         const verifiedUser = verifyUser(accessToken)
-        const id = verifiedUser?._id
+        const _id = verifiedUser?._id
+        console.log('verifiedUser', verifiedUser)
 
-        if (!id) {
+        if (!_id) {
             return errorResponse(res, {
                 status: statusCode.UNAUTHORIZED,
                 errors: ["token expired"]
             })
         }
 
-        const user = await User.findById(id)
+        const user = await User.findById(_id)
 
         if (!user) {
             return errorResponse(res, {
