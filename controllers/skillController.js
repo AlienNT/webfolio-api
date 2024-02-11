@@ -54,7 +54,7 @@ class SkillController {
             const {id} = req?.params
             const skillFields = FieldsService.getSkillFields(req)
 
-            const updatedSkill = await Skill.findByIdAndUpdate(id, skillFields)
+            const updatedSkill = await Skill.findByIdAndUpdate(id, skillFields, {new: true})
 
             if (!updatedSkill) {
                 return errorResponse(res, {
