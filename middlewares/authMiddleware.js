@@ -1,7 +1,6 @@
-import {getCookie, getToken, verifyUser} from "../helpers/authHelper.js";
-import {errorResponse, setCookie, successResponse} from "../helpers/responseHelper.js";
+import {verifyUser} from "../helpers/authHelper.js";
+import {errorResponse} from "../helpers/responseHelper.js";
 import statusCode from "../helpers/statusCodeHelper.js";
-import TokenController from "../controllers/tokenController.js";
 import {User} from "../models/index.js";
 
 export default async function (req, res, next) {
