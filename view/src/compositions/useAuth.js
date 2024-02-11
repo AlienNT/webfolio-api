@@ -2,8 +2,9 @@ import {computed, reactive} from "vue";
 
 import {useRequest} from "./useRequest.js";
 import {useAccessToken} from "./useAccessToken.js";
+import {requestRoutes} from "@/helpers/requestRoutes.js";
 
-const {setAccessToken} = useAccessToken()
+const {setAccessToken, removeAccessToken, deleteTokenInLocalStorage} = useAccessToken()
 const {apiRequest} = useRequest()
 
 const state = reactive({
@@ -21,18 +22,21 @@ export function useAuth() {
     }
 
     async function loginRequest(formData) {
-        return await apiRequest('POST', '/login', formData)
-            .then(({data}) => {
-                setErrors([])
-                setAccessToken(data?.data?.accessToken)
+        return await apiRequest({
+            method: requestRoutes.AUTH.LOGIN.method,
+            route: requestRoutes.AUTH.LOGIN.url,
+            body: formData
 
-                return data?.data
-            })
-            .catch(res => {
-                const errors = res?.response?.data?.errors
+        }).then(({data}) => {
+            setErrors([])
+            setAccessToken(data?.accessToken)
 
-                if (errors) setErrors(errors)
-            })
+            return data?.data
+        }).catch(res => {
+            const errors = res?.response?.data?.errors
+
+            if (errors) setErrors(errors)
+        })
     }
 
     const errors = computed(() => {
@@ -43,11 +47,17 @@ export function useAuth() {
         state.errors = errors
     }
 
+    function logout() {
+        removeAccessToken()
+        deleteTokenInLocalStorage()
+    }
+
     return {
         isAuth,
         setIsAuth,
         loginRequest,
         errors,
-        setErrors
+        setErrors,
+        logout
     }
 }
