@@ -6,7 +6,7 @@ import {useSkillRequest} from "../compositions/api/useSkillRequest.js";
 import {useSkills} from "../compositions/state/useSkills.js";
 import {onMounted} from "vue";
 
-const {fetchSkills} = useSkillRequest()
+const {fetchSkills, patchSkill} = useSkillRequest()
 const {skills} = useSkills()
 
 onMounted(() => {
@@ -20,7 +20,11 @@ function deleteHandler(e) {
   console.log('deleteHandler', e)
 }
 function toggleActiveHandler(e) {
-  console.log('toggleActiveHandler', e)
+  const skill = skills.value?.find(skill => skill._id === e)
+
+  if (skill) {
+    patchSkill(e, {active: !skill.active})
+  }
 }
 
 
