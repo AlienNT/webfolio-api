@@ -52,7 +52,7 @@ class ContactController {
             const {_id} = req?.body
             const fields = getContactFields(req)
 
-            const updatedContact = await Contact.findByIdAndUpdate(_id, fields)
+            const updatedContact = await Contact.findByIdAndUpdate(_id, fields, {new: true})
 
             if (!updatedContact) {
                 errorResponse(res, {
