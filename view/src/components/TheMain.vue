@@ -2,8 +2,11 @@
 import {useAuth} from "../compositions/useAuth.js";
 import {useAccessToken} from "../compositions/useAccessToken.js";
 import {onMounted, watch} from "vue";
+import {useRouter} from "vue-router";
+import routerHelper from "@/router/routerHelper.js";
 
-const {setIsAuth} = useAuth()
+const {setIsAuth, logout} = useAuth()
+const router = useRouter()
 
 const {
   accessToken,
@@ -25,13 +28,16 @@ watch(() => accessToken.value, (value, oldValue) => {
   setIsAuth(!!value)
 
   if (value && value !== oldValue) {
-    setAccessToken(value)
     setTokenToLocalStorage(value)
 
     return null
   }
 
   deleteTokenInLocalStorage()
+
+  if (!accessToken.value) {
+    router.push({name: routerHelper.AUTH.name})
+  }
 })
 
 
