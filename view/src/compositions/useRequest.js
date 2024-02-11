@@ -37,7 +37,7 @@ export function useRequest() {
     function request({method = 'GET', route, body}) {
         return axios({
             method,
-            baseURL: config.HOST.dev,
+            baseURL: import.meta.env.PROD ? config.HOST.prod : config.HOST.dev,
             url: route,
             data: body,
             withCredentials: true,
