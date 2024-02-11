@@ -1,7 +1,10 @@
 export const routeNames = {
     SKILLS: '/skills',
     WORKS: '/works',
-    CONTACTS: '/contacts'
+    CONTACTS: '/contacts',
+    LOGIN: '/login',
+    LOGOUT: '/logout',
+    REFRESH: '/refresh'
 }
 export const requestRoutes = {
     SKILLS: {
@@ -57,6 +60,18 @@ export const requestRoutes = {
             method: 'delete',
             url: (id) => routeNames.CONTACTS + '/' + id
         },
+    },
+    AUTH: {
+        LOGIN: {
+            method: 'post',
+            url: routeNames.LOGIN
+        },
+        REFRESH: {
+            method: 'get',
+            url: routeNames.REFRESH
+        }
     }
+
+
 
 }
