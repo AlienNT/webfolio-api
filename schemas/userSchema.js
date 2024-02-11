@@ -12,7 +12,7 @@ export const userSchema = new Schema({
     },
     tokens: [
         {
-            type: Schema.Types.String,
+            type: Schema.Types.ObjectId,
             ref: 'Token'
         }
     ]
