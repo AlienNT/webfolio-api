@@ -6,6 +6,7 @@ import url from "url";
 import cors from 'cors'
 import config from "./config/index.js";
 import router from "./routes/index.js";
+import StayAwakeController from "./controllers/stayAwakeController.js";
 import cookieParser from "cookie-parser";
 import tokensMiddleware from "./middlewares/tokensMiddleware.js";
 
@@ -17,7 +18,7 @@ const filePath = __dirname + './view/dist'
 
 APP
     .use(cors({
-        origin : config.ORIGINS,
+        origin: config.ORIGINS,
         credentials: true,
     }))
     .use(cookieParser())
@@ -42,3 +43,17 @@ const start = async () => {
     }
 }
 await start()
+
+
+async function stayAwayRequest(counter = 1) {
+    return await StayAwakeController.stayAwayRequest().then(() => {
+        setTimeout(async () => {
+            const result = await stayAwayRequest(counter += 1)
+            console.log('stay awake counter', counter)
+
+            return result
+        }, 1000 * 60 * 5)
+    })
+}
+
+await stayAwayRequest(1)
