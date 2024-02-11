@@ -29,8 +29,7 @@ export function verifyUser(token) {
 }
 
 export function getToken(req) {
-    const authorizationHeader = req.headers.authorization
-    return authorizationHeader ? authorizationHeader.split(' ')[1] : null
+    return req.headers.authorization ? req.headers.authorization.split(' ')[1] : null
 }
 
 export function getCookie(req, cookieName) {
