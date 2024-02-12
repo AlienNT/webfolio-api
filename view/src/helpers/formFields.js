@@ -14,29 +14,45 @@ function workLocaleFields() {
 }
 
 export const workFormFields = {
-    EN: workLocaleFields(),
-    RU: workLocaleFields(),
-    UA: workLocaleFields(),
-    CODE_PATH: {
-        name: 'codePath',
-        label: 'code path',
-        value: null
+    locales: {
+        EN: {
+            name: 'en',
+            label: 'en',
+            fields: workLocaleFields()
+        },
+        RU: {
+            name: 'ru',
+            label: 'ru',
+            fields: workLocaleFields()
+        },
+        UA: {
+            name: 'ua',
+            label: 'ua',
+            fields: workLocaleFields()
+        },
     },
-    IMAGE: {
-        name: 'image',
-        label: 'image',
-        value: null
-    },
-    PATH: {
-        name: 'path',
-        label: 'path',
-        value: null
-    },
-    CHIPS: {
-        name: 'chips',
-        label: 'skills',
-        value: null
-    },
+    fields: {
+        CODE_PATH: {
+            name: 'codePath',
+            label: 'code path',
+            value: null
+        },
+        IMAGE: {
+            name: 'image',
+            label: 'image',
+            value: null
+        },
+        PATH: {
+            name: 'path',
+            label: 'path',
+            value: null
+        },
+        CHIPS: {
+            name: 'chips',
+            label: 'skills',
+            value: null
+        },
+    }
 }
 
 export const skillFormFields = {
