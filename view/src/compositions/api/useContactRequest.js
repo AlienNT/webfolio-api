@@ -35,8 +35,24 @@ export function useContactRequest () {
             console.log('patchContact error', err)
         })
     }
+    async function createContact({body}) {
+        return await apiRequest({
+            method: requestRoutes.CONTACTS.CREATE.method,
+            route: requestRoutes.CONTACTS.CREATE.url,
+            body
+
+        }).then(({data, status}) => {
+            addContact(data)
+
+            return {data, status}
+
+        }).catch(err => {
+            console.log('createContact error', err)
+        })
+    }
     return {
         fetchContacts,
-        patchContact
+        patchContact,
+        createContact
     }
 }
