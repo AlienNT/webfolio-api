@@ -50,9 +50,24 @@ export function useContactRequest () {
             console.log('createContact error', err)
         })
     }
+    async function deleteContact({id}) {
+        return await apiRequest({
+            method: requestRoutes.CONTACTS.DELETE.method,
+            route: requestRoutes.CONTACTS.DELETE.url(id),
+
+        }).then(({data, status}) => {
+            removeContact(id)
+
+            return {data, status}
+
+        }).catch(err => {
+            console.log('createContact error', err)
+        })
+    }
     return {
         fetchContacts,
         patchContact,
-        createContact
+        createContact,
+        deleteContact
     }
 }
