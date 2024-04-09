@@ -12,9 +12,7 @@ const {logout} = useAuth()
 
 export function useRequest() {
     async function apiRequest({method = 'GET', route, body}) {
-        console.log('route', route)
         const tokenExpired = route !== routerHelper.AUTH.path ? isTokenExpired(accessToken.value) : false
-        console.log('tokenExpired', tokenExpired)
 
         if (tokenExpired) {
             await refreshTokenRequest()
